@@ -125,6 +125,7 @@ export default function Calendar({ selectedDate, onSelectDate, onMonthChange }) 
             const isToday = dateStr === todayStr
             const isSelected = dateStr === selectedDate
             const hasEvent = info?.hasEvent
+            const eventCount = info?.count || 0
             const hasConflict = info?.hasConflict
             const dateColors = getDateColors(colorMap[dateStr])
             const boxColor = dateColors[0]
@@ -162,12 +163,16 @@ export default function Calendar({ selectedDate, onSelectDate, onMonthChange }) 
                 </span>
                 {hasEvent && (
                   <span className="relative z-10 mt-1 flex items-center justify-center gap-1">
-                    {Array.from({ length: Math.min(info?.count || 1, 3) }).map((_, dotIndex) => (
-                      <span
-                        key={dotIndex}
-                        className={`w-1.5 h-1.5 rounded-full ${hasConflict ? 'bg-red-500' : 'bg-indigo-400'}`}
-                      />
-                    ))}
+                    {eventCount > 3 ? (
+                      <span className={`h-1 w-5 rounded-full ${hasConflict ? 'bg-red-500' : 'bg-indigo-400'}`} />
+                    ) : (
+                      Array.from({ length: Math.max(eventCount, 1) }).map((_, dotIndex) => (
+                        <span
+                          key={dotIndex}
+                          className={`w-1.5 h-1.5 rounded-full ${hasConflict ? 'bg-red-500' : 'bg-indigo-400'}`}
+                        />
+                      ))
+                    )}
                   </span>
                 )}
               </motion.button>
