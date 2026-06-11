@@ -1,4 +1,4 @@
-# 📅 Tentative Subject Calendar
+# 📅 Institute Calendar
 
 A standalone production-ready event calendar for **Thapar Institute of Engineering & Technology**.
 
@@ -9,7 +9,7 @@ Built with React + Vite + TailwindCSS (frontend) and Node.js + Express + MongoDB
 ## 🗂️ Project Structure
 
 ```
-tentative-event-calendar/
+Institute-event-calendar/
 ├── backend/           ← Node.js + Express API
 │   ├── controllers/
 │   ├── middleware/
@@ -43,7 +43,7 @@ tentative-event-calendar/
 ```bash
 # If from git:
 git clone <your-repo-url>
-cd tentative-event-calendar
+cd Institute-event-calendar
 ```
 
 ### Step 2: Set up the Backend
@@ -63,7 +63,7 @@ Edit `.env`:
 
 ```env
 PORT=5000
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/tentative-events?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/Institute-events?retryWrites=true&w=majority
 ADMIN_PASSWORD=thapar2026
 FRONTEND_URL=http://localhost:5173
 ```
@@ -127,7 +127,7 @@ Frontend runs at: **http://localhost:5173**
 1. Go to `/admin` and log in
 2. Click **Download Template** to get the Excel template
 3. Fill in the template with event data:
-   - Required: Source, Subject, Start Date, Start Time, End Date, End Time, Location
+   - Required: Source, Event, Start Date, Start Time, End Date, End Time, Location
    - Optional: Description
 4. Click **Import Excel** and upload the filled file
 
@@ -159,7 +159,7 @@ Conflicting events are marked with:
 4. Whitelist all IPs: `0.0.0.0/0` (for Vercel)
 5. Get your connection string:
    ```
-   mongodb+srv://<user>:<password>@cluster0.xxxxx.mongodb.net/tentative-events
+   mongodb+srv://<user>:<password>@cluster0.xxxxx.mongodb.net/Institute-events
    ```
 
 ---
@@ -180,7 +180,7 @@ vercel
 ```
 
 When prompted:
-- **Project name:** `tentative-events-backend`
+- **Project name:** `Institute-events-backend`
 - **Framework:** Other
 - **Root directory:** `./` (current backend folder)
 
@@ -197,7 +197,7 @@ Then redeploy:
 vercel --prod
 ```
 
-Note your backend URL: `https://tentative-events-backend.vercel.app`
+Note your backend URL: `https://Institute-events-backend.vercel.app`
 
 ---
 
@@ -214,14 +214,14 @@ vercel
 ```
 
 When prompted:
-- **Project name:** `tentative-events-frontend`
+- **Project name:** `Institute-events-frontend`
 - **Framework:** Vite
 
 After initial deploy, go to Vercel dashboard → Frontend project → **Settings → Environment Variables** and add:
 
 | Variable        | Value                                             |
 |-----------------|---------------------------------------------------|
-| `VITE_API_URL`  | `https://tentative-events-backend.vercel.app`     |
+| `VITE_API_URL`  | `https://Institute-events-backend.vercel.app`     |
 
 Then redeploy for production:
 ```bash
@@ -331,7 +331,7 @@ GET https://your-backend.vercel.app/api/health
 
 Expected response:
 ```json
-{ "status": "OK", "message": "Tentative Subject Calendar API is running" }
+{ "status": "OK", "message": "Institute Calendar API is running" }
 ```
 
 ---

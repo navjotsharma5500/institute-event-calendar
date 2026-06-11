@@ -168,7 +168,7 @@ async function updateEvent(req, res) {
       new: true,
       runValidators: true,
     });
-    if (!updated) return res.status(404).json({ error: 'Subject not found' });
+    if (!updated) return res.status(404).json({ error: 'Event not found' });
     await recalculateAllConflicts(Event);
     const fresh = await Event.findById(updated._id);
     res.json({ ...fresh.toObject(), status: getEventStatus(fresh) });
@@ -180,9 +180,9 @@ async function updateEvent(req, res) {
 async function deleteEvent(req, res) {
   try {
     const deleted = await Event.findByIdAndDelete(req.params.id);
-    if (!deleted) return res.status(404).json({ error: 'Subject not found' });
+    if (!deleted) return res.status(404).json({ error: 'Event not found' });
     await recalculateAllConflicts(Event);
-    res.json({ message: 'Subject deleted successfully' });
+    res.json({ message: 'Event deleted successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -195,7 +195,7 @@ async function ignoreEventConflict(req, res) {
       { ignoreConflict: true, conflict: false, conflictWith: [] },
       { new: true, runValidators: true }
     );
-    if (!updated) return res.status(404).json({ error: 'Subject not found' });
+    if (!updated) return res.status(404).json({ error: 'Event not found' });
     await recalculateAllConflicts(Event);
     const fresh = await Event.findById(updated._id);
     res.json({ ...fresh.toObject(), status: getEventStatus(fresh) });
@@ -212,7 +212,7 @@ async function importEvents(req, res) {
     }
     const inserted = await Event.insertMany(events, { ordered: false });
     await recalculateAllConflicts(Event);
-    res.status(201).json({ message: `Successfully imported ${inserted.length} subjects`, count: inserted.length });
+    res.status(201).json({ message: `Successfully imported ${inserted.length} Events`, count: inserted.length });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

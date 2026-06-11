@@ -9,7 +9,7 @@ const eventSchema = new mongoose.Schema(
     },
     event: {
       type: String,
-      required: [true, 'Subject name is required'],
+      required: [true, 'Event name is required'],
       trim: true,
     },
     startDate: {

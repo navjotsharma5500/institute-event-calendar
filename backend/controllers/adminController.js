@@ -15,7 +15,7 @@ async function downloadTemplate(req, res) {
   try {
     const buffer = generateTemplate();
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader('Content-Disposition', 'attachment; filename="subject-import-template.xlsx"');
+    res.setHeader('Content-Disposition', 'attachment; filename="Event-import-template.xlsx"');
     res.send(buffer);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -31,7 +31,7 @@ async function uploadExcel(req, res) {
     await recalculateAllConflicts(Event);
 
     res.status(201).json({
-      message: `Successfully imported ${inserted.length} subjects`,
+      message: `Successfully imported ${inserted.length} Events`,
       count: inserted.length,
     });
   } catch (err) {
@@ -54,7 +54,7 @@ async function downloadEventsExcel(req, res) {
     const events = await Event.find(query).sort({ startDate: 1, startTime: 1, society: 1 });
     const buffer = generateEventsExport(events);
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader('Content-Disposition', 'attachment; filename="tentative-calendar-subjects.xlsx"');
+    res.setHeader('Content-Disposition', 'attachment; filename="Institute-calendar-Events.xlsx"');
     res.send(buffer);
   } catch (err) {
     res.status(500).json({ error: err.message });

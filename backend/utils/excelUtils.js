@@ -2,11 +2,11 @@ const XLSX = require('xlsx');
 
 function generateTemplate() {
   const wb = XLSX.utils.book_new();
-  const headers = ['Source', 'Subject', 'Start Date', 'Start Time', 'End Date', 'End Time', 'Location', 'Description'];
+  const headers = ['Source', 'Event', 'Start Date', 'Start Time', 'End Date', 'End Time', 'Location', 'Description'];
   const sampleRow = [
     'Computer Science Source', 'Annual Hackathon',
     '2025-09-15', '09:00', '2025-09-15', '18:00',
-    'Main Auditorium', 'Annual hackathon subject with prizes',
+    'Main Auditorium', 'Annual hackathon Event with prizes',
   ];
 
   const ws = XLSX.utils.aoa_to_sheet([headers, sampleRow]);
@@ -14,7 +14,7 @@ function generateTemplate() {
     { wch: 25 }, { wch: 30 }, { wch: 15 }, { wch: 12 },
     { wch: 15 }, { wch: 12 }, { wch: 25 }, { wch: 40 },
   ];
-  XLSX.utils.book_append_sheet(wb, ws, 'Subjects');
+  XLSX.utils.book_append_sheet(wb, ws, 'Events');
   return XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
 }
 
@@ -22,7 +22,7 @@ function generateEventsExport(events) {
   const wb = XLSX.utils.book_new();
   const headers = [
     'Source',
-    'Subject',
+    'Event',
     'Start Date',
     'Start Time',
     'End Date',
@@ -51,7 +51,7 @@ function generateEventsExport(events) {
     { wch: 15 }, { wch: 12 }, { wch: 28 }, { wch: 45 },
     { wch: 12 }, { wch: 18 },
   ];
-  XLSX.utils.book_append_sheet(wb, ws, 'Subjects');
+  XLSX.utils.book_append_sheet(wb, ws, 'Events');
   return XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
 }
 
@@ -66,7 +66,7 @@ function parseExcelFile(buffer) {
   if (rows.length < 2) throw new Error('Excel file has no data rows');
 
   const headers = rows[0].map((h) => String(h).trim().toLowerCase());
-  const requiredHeaders = ['source', 'subject', 'start date', 'start time', 'end date', 'end time', 'location'];
+  const requiredHeaders = ['source', 'Event', 'start date', 'start time', 'end date', 'end time', 'location'];
 
   const colMap = {};
   for (const required of requiredHeaders) {
@@ -87,7 +87,7 @@ function parseExcelFile(buffer) {
     const rowErrors = [];
 
     const society = String(row[colMap['source']] || '').trim();
-    const event = String(row[colMap['subject']] || '').trim();
+    const event = String(row[colMap['Event']] || '').trim();
     const startDate = normalizeDate(row[colMap['start date']]);
     const startTime = normalizeTime(row[colMap['start time']]);
     const endDate = normalizeDate(row[colMap['end date']]);
@@ -96,7 +96,7 @@ function parseExcelFile(buffer) {
     const description = descIdx !== -1 ? String(row[descIdx] || '').trim() : '';
 
     if (!society) rowErrors.push('Source is required');
-    if (!event) rowErrors.push('Subject name is required');
+    if (!event) rowErrors.push('Event name is required');
     if (!startDate) rowErrors.push('Start Date is invalid (use YYYY-MM-DD)');
     if (!startTime) rowErrors.push('Start Time is invalid (use HH:MM)');
     if (!endDate) rowErrors.push('End Date is invalid (use YYYY-MM-DD)');
@@ -116,7 +116,7 @@ function parseExcelFile(buffer) {
     throw new Error(`Validation errors:\n${errorMsg}`);
   }
 
-  if (events.length === 0) throw new Error('No valid subjects found in the Excel file');
+  if (events.length === 0) throw new Error('No valid Events found in the Excel file');
 
   return events;
 }

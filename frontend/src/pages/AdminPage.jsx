@@ -130,7 +130,7 @@ export default function AdminPage() {
       const res = await api.get('/events')
       setEvents(res.data)
     } catch {
-      toast.error('Failed to load subjects')
+      toast.error('Failed to load Events')
     } finally {
       setLoading(false)
     }
@@ -398,7 +398,7 @@ export default function AdminPage() {
       const res = await api.get('/admin/template', { responseType: 'blob' })
       const url = URL.createObjectURL(new Blob([res.data]))
       const a = document.createElement('a')
-      a.href = url; a.download = 'subject-import-template.xlsx'; a.click()
+      a.href = url; a.download = 'Event-import-template.xlsx'; a.click()
       URL.revokeObjectURL(url)
       toast.success('Template downloaded!')
     } catch {
@@ -418,13 +418,13 @@ export default function AdminPage() {
       const url = URL.createObjectURL(new Blob([res.data]))
       const a = document.createElement('a')
       a.href = url
-      a.download = 'tentative-calendar-subjects.xlsx'
+      a.download = 'Institute-calendar-Events.xlsx'
       a.click()
       URL.revokeObjectURL(url)
-      toast.success('Subjects Excel downloaded')
+      toast.success('Events Excel downloaded')
       setExportModal(false)
     } catch (err) {
-      toast.error(err.response?.data?.error || 'Failed to download subjects Excel')
+      toast.error(err.response?.data?.error || 'Failed to download Events Excel')
     }
   }
 
@@ -435,7 +435,7 @@ export default function AdminPage() {
 
     const formData = new FormData()
     formData.append('file', file)
-    const toastId = toast.loading('Importing subjects...')
+    const toastId = toast.loading('Importing Events...')
     try {
       const res = await api.post('/admin/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
@@ -480,11 +480,11 @@ export default function AdminPage() {
     try {
       if (isEdit) {
         await api.put(`/events/${targetEvent._id}`, form)
-        toast.success('Subject updated!')
+        toast.success('Event updated!')
         setEditModal(false)
       } else {
         await api.post('/events', form)
-        toast.success('Subject created!')
+        toast.success('Event created!')
         setAddModal(false)
       }
       fetchEvents()
@@ -499,7 +499,7 @@ export default function AdminPage() {
     setFormLoading(true)
     try {
       await api.delete(`/events/${targetEvent._id}`)
-      toast.success('Subject deleted!')
+      toast.success('Event deleted!')
       setDeleteModal(false)
       fetchEvents()
     } catch {
@@ -548,7 +548,7 @@ export default function AdminPage() {
                 <img src={THAPAR_LOGO} alt="Thapar" className="h-12 w-auto object-contain" />
               </div>
               <h1 className="font-display font-bold text-white text-2xl">Admin Access</h1>
-              <p className="text-white/70 text-sm mt-1">Tentative Subject Calendar</p>
+              <p className="text-white/70 text-sm mt-1">Institute Event Calendar</p>
             </div>
             <div className="p-8">
               <div className="flex items-center justify-center mb-6">
@@ -611,7 +611,7 @@ export default function AdminPage() {
             </div>
             <div>
               <h1 className="font-display font-bold text-slate-900 text-lg">Admin Dashboard</h1>
-              <p className="text-brand-600 font-semibold text-xs">Tentative Subject Calendar</p>
+              <p className="text-brand-600 font-semibold text-xs">Institute Event Calendar</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -631,7 +631,7 @@ export default function AdminPage() {
         {/* Stats row */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
-            { label: 'Total Subjects', value: events.length, color: 'text-brand-600', bg: 'bg-brand-50' },
+            { label: 'Total Events', value: events.length, color: 'text-brand-600', bg: 'bg-brand-50' },
             { label: 'Conflicts', value: events.filter(e => e.conflict).length, color: 'text-red-500', bg: 'bg-red-50' },
             { label: 'Upcoming', value: events.filter(e => e.status === 'Upcoming').length, color: 'text-blue-600', bg: 'bg-blue-50' },
             { label: 'Live Now', value: events.filter(e => e.status === 'Live').length, color: 'text-green-600', bg: 'bg-green-50' },
@@ -658,7 +658,7 @@ export default function AdminPage() {
               </button>
               <input type="file" ref={fileInputRef} accept=".xlsx" onChange={handleFileUpload} className="hidden" />
               <button onClick={openAdd} className="btn-primary">
-                <Plus size={15} /> Add Subject
+                <Plus size={15} /> Add Event
               </button>
               <button onClick={openColorSettings} className="btn-secondary">
                 <Settings size={15} /> Colour Settings
@@ -669,17 +669,17 @@ export default function AdminPage() {
             </div>
             <div className="relative">
               <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-              <input className="input pl-9 w-64" placeholder="Search subjects..."
+              <input className="input pl-9 w-64" placeholder="Search Events..."
                 value={search} onChange={e => setSearch(e.target.value)} />
             </div>
           </div>
         </div>
 
-        {/* Subjects Table */}
+        {/* Events Table */}
         <div className="card overflow-hidden">
           <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
             <h2 className="font-display font-semibold text-slate-900">
-              Subjects <span className="text-slate-400 font-normal text-sm ml-1">({filteredEvents.length})</span>
+              Events <span className="text-slate-400 font-normal text-sm ml-1">({filteredEvents.length})</span>
             </h2>
             <button onClick={fetchEvents} className="text-xs text-brand-600 hover:text-brand-700 font-medium">
               Refresh
@@ -693,15 +693,15 @@ export default function AdminPage() {
           ) : filteredEvents.length === 0 ? (
             <div className="py-16 text-center">
               <FileSpreadsheet size={40} className="mx-auto text-slate-300 mb-3" />
-              <p className="text-slate-500 font-medium">No subjects found</p>
-              <p className="text-slate-400 text-sm mt-1">Import an Excel file or add subjects manually</p>
+              <p className="text-slate-500 font-medium">No Events found</p>
+              <p className="text-slate-400 text-sm mt-1">Import an Excel file or add Events manually</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-slate-50 border-b border-slate-100">
-                    {['Source', 'Subject', 'Location', 'Start Date', 'End Date', 'Status', 'Actions'].map(h => (
+                    {['Source', 'Event', 'Location', 'Start Date', 'End Date', 'Status', 'Actions'].map(h => (
                       <th key={h} className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider whitespace-nowrap">
                         {h}
                       </th>
@@ -786,7 +786,7 @@ export default function AdminPage() {
       <Modal
         isOpen={addModal || editModal}
         onClose={() => { setAddModal(false); setEditModal(false) }}
-        title={editModal ? 'Edit Subject' : 'Add New Subject'}
+        title={editModal ? 'Edit Event' : 'Add New Event'}
         size="lg"
       >
         <EventForm
@@ -799,7 +799,7 @@ export default function AdminPage() {
         />
       </Modal>
 
-      <Modal isOpen={exportModal} onClose={() => setExportModal(false)} title="Download Subjects Excel" size="md">
+      <Modal isOpen={exportModal} onClose={() => setExportModal(false)} title="Download Events Excel" size="md">
         <div className="p-6 space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -858,7 +858,7 @@ export default function AdminPage() {
       </Modal>
 
       {/* ── Detail Modal ── */}
-      <Modal isOpen={detailModal} onClose={() => setDetailModal(false)} title="Subject Details">
+      <Modal isOpen={detailModal} onClose={() => setDetailModal(false)} title="Event Details">
         {targetEvent && (
           <div className="p-6 space-y-4">
             <div className="flex items-center gap-2 flex-wrap">
@@ -996,7 +996,7 @@ export default function AdminPage() {
       </Modal>
 
       {/* ── Delete Confirm Modal ── */}
-      <Modal isOpen={deleteModal} onClose={() => setDeleteModal(false)} title="Delete Subject" size="sm">
+      <Modal isOpen={deleteModal} onClose={() => setDeleteModal(false)} title="Delete Event" size="sm">
         <div className="p-6 space-y-4">
           <div className="flex items-center gap-3 p-4 bg-red-50 rounded-xl border border-red-100">
             <AlertTriangle size={20} className="text-red-500 shrink-0" />
@@ -1326,7 +1326,7 @@ function DateAssignmentPanel({
           <h3 className="font-display font-bold text-slate-900">
             {editingAssignment ? 'Edit Assignment' : 'Assign Date Colour'}
           </h3>
-          <p className="text-xs text-slate-500 mt-1">This colour layer is independent from subject data.</p>
+          <p className="text-xs text-slate-500 mt-1">This colour layer is independent from Event data.</p>
         </div>
 
         <div className="grid grid-cols-2 gap-2 rounded-xl bg-white border border-slate-200 p-1">
@@ -1439,7 +1439,7 @@ function EventForm({ form, setForm, onSave, onCancel, loading, isEdit }) {
           <input className="input" placeholder="e.g. Computer Source" value={form.society} onChange={update('society')} required />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-slate-600 mb-1.5 uppercase tracking-wider">Subject Name *</label>
+          <label className="block text-xs font-semibold text-slate-600 mb-1.5 uppercase tracking-wider">Event Name *</label>
           <input className="input" placeholder="e.g. Annual Hackathon" value={form.event} onChange={update('event')} required />
         </div>
         <div>
@@ -1464,7 +1464,7 @@ function EventForm({ form, setForm, onSave, onCancel, loading, isEdit }) {
         </div>
         <div className="sm:col-span-2">
           <label className="block text-xs font-semibold text-slate-600 mb-1.5 uppercase tracking-wider">Description</label>
-          <textarea className="input min-h-[80px] resize-none" placeholder="Optional subject description..."
+          <textarea className="input min-h-[80px] resize-none" placeholder="Optional Event description..."
             value={form.description} onChange={update('description')} />
         </div>
       </div>
@@ -1473,7 +1473,7 @@ function EventForm({ form, setForm, onSave, onCancel, loading, isEdit }) {
         <button onClick={onSave} disabled={loading} className="btn-primary flex-1 justify-center">
           {loading
             ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-            : <><CheckCircle size={15} />{isEdit ? 'Save Changes' : 'Create Subject'}</>
+            : <><CheckCircle size={15} />{isEdit ? 'Save Changes' : 'Create Event'}</>
           }
         </button>
       </div>

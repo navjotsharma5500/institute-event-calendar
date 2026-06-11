@@ -59,7 +59,7 @@ mongoose
     app.get('/api/health', (req, res) => {
       res.json({
         status: 'OK',
-        message: 'Tentative Subject Calendar API is running',
+        message: 'Institute Event Calendar API is running',
       });
     });
 

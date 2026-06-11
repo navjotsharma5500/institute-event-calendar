@@ -146,13 +146,13 @@ export default function PublicPage() {
             <img src={THAPAR_LOGO} alt="Thapar Logo" className="h-14 sm:h-[72px] w-auto object-contain" />
             <div>
               <p className="text-sm font-semibold leading-tight text-gray-900">Thapar Institute of Engineering and Technology</p>
-              <p className="text-xs font-semibold text-blue-600 mt-0.5">Subject Calendar</p>
+              <p className="text-xs font-semibold text-blue-600 mt-0.5">Event Calendar</p>
             </div>
           </div>
 
           <div className="hidden md:flex items-center gap-2">
             <CalendarIcon size={19} className="text-blue-600" />
-            <h1 className="text-2xl font-bold tracking-normal">Thapar Subject Calendar</h1>
+            <h1 className="text-2xl font-bold tracking-normal">Thapar Event Calendar</h1>
           </div>
 
           <div className="w-[220px] hidden xl:block" />
@@ -214,7 +214,7 @@ export default function PublicPage() {
                   <label className="relative">
                     <span className="block text-[11px] font-bold uppercase tracking-wider text-gray-500 mb-1">Search</span>
                     <Search size={14} className="absolute left-3 top-[34px] text-gray-400" />
-                    <input className="input pl-9 rounded-lg" placeholder="Subject name or source name" value={search} onChange={e => setSearch(e.target.value)} />
+                    <input className="input pl-9 rounded-lg" placeholder="Event name or source name" value={search} onChange={e => setSearch(e.target.value)} />
                   </label>
                   <label className="relative">
                     <span className="block text-[11px] font-bold uppercase tracking-wider text-gray-500 mb-1">Location</span>
