@@ -147,7 +147,7 @@ export default function PublicPage() {
             <img src={THAPAR_LOGO} alt="Thapar Logo" className="h-14 sm:h-[72px] w-auto object-contain" />
             <div>
               <p className="text-sm font-semibold leading-tight text-gray-900">Thapar Institute of Engineering and Technology</p>
-              <p className="text-xs font-semibold text-blue-600 mt-0.5">Event Calendar</p>
+              <p className="text-xs font-semibold text-blue-600 mt-0.5">Institute Event Calendar</p>
             </div>
           </div>
 
@@ -162,7 +162,7 @@ export default function PublicPage() {
             aria-label="Back to Campus Connect event calendar"
           >
             <ChevronLeft size={16} />
-            <span className="hidden sm:inline">Back</span>
+            <span>Back</span>
           </a>
         </div>
       </header>
