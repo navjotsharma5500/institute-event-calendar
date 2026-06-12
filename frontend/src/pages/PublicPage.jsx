@@ -4,6 +4,7 @@ import {
   AlertTriangle,
   Building2,
   Calendar as CalendarIcon,
+  ChevronLeft,
   Clock,
   Filter,
   MapPin,
@@ -155,7 +156,14 @@ export default function PublicPage() {
             <h1 className="text-2xl font-bold tracking-normal">Thapar Event Calendar</h1>
           </div>
 
-          <div className="w-[220px] hidden xl:block" />
+          <a
+            href="https://campusconnect.thapar.edu/event-calendar"
+            className="inline-flex h-10 items-center justify-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-700 shadow-sm transition-colors hover:border-blue-300 hover:text-blue-700 hover:bg-blue-50 shrink-0"
+            aria-label="Back to Campus Connect event calendar"
+          >
+            <ChevronLeft size={16} />
+            <span className="hidden sm:inline">Back</span>
+          </a>
         </div>
       </header>
 
